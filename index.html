@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Kootu | Credential Verification</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #111111;
+      --c-charcoal: #303030;
+      --c-grey: #8C8C8C;
+      --c-white: #F7F7F5;
+      --c-red: #D62828;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--c-black);
+      color: var(--c-white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .badge-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--c-charcoal);
+      border: 1px solid rgba(247, 247, 245, 0.12);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .badge-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--c-red);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(247, 247, 245, 0.08);
+      border: 1px solid rgba(247, 247, 245, 0.2);
+      border-radius: 9999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--c-white);
+      box-shadow: 0 0 10px var(--c-white);
+    }
+    .status-dot.invalid {
+      background: var(--c-red);
+      box-shadow: 0 0 10px var(--c-red);
+    }
+    .member-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3rem;
+      color: var(--c-white);
+    }
+    .member-title {
+      font-size: 0.95rem;
+      color: var(--c-grey);
+      font-weight: 500;
+      margin-bottom: 1.75rem;
+      line-height: 1.4;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      border-top: 1px solid rgba(247, 247, 245, 0.1);
+      padding-top: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .info-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--c-grey);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .info-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--c-white);
+    }
+    .footer-stamp {
+      border-top: 1px dashed rgba(247, 247, 245, 0.12);
+      padding-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--c-grey);
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="badge-card" id="card">
+    <div class="status-pill" id="status-pill">
+      <span class="status-dot" id="status-dot"></span>
+      <span id="status-text">USER VERIFIED</span>
+    </div>
+
+    <div class="member-name" id="name">Scanning...</div>
+    <div class="member-title" id="title">-</div>
+
+    <div class="info-grid">
+      <div>
+        <div class="info-label">Member ID</div>
+        <div class="info-val" id="id-val">-</div>
+      </div>
+      <div>
+        <div class="info-label">Wing</div>
+        <div class="info-val" id="wing-val">-</div>
+      </div>
+      <div style="grid-column: span 2;">
+        <div class="info-label">Discipline / Branch</div>
+        <div class="info-val" id="dept-val" style="font-family: 'Plus Jakarta Sans', sans-serif;">-</div>
+      </div>
+    </div>
+
+    <div class="footer-stamp">
+      <span>CODE KOOTU</span>
+      <span>TENURE 2026–2027</span>
+    </div>
+  </div>
+
+  <script>
+    const roster = {
+      "CS-S-01": { name: "Noel Mathews", title: "Chief Systems Architect & Technical Director", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
+      "CS-S-02": { name: "Gokul G Krishna", title: "Backend & Cloud Infrastructure Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
+      "CY-S-14": { name: "Sayed Ibrahim", title: "Systems Security & Web Experience Lead", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Software" },
+      "CS-S-06": { name: "Ameen Puthiyottil", title: "Application & Core Logic Developer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
+      "CS-S-05": { name: "Kevin Paul", title: "Integration & Middleware Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
+      "CS-S-11": { name: "Abdullah Ikhwan K A", title: "Embedded Software & Firmware Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
+      "ME-H-07": { name: "Austin M J", title: "Lead Mechanical & Structural Engineer", dept: "B.Tech Mechanical Engineering", wing: "Hardware" },
+      "EC-H-15": { name: "Muhammed Shahbaz K P", title: "Lead Embedded Systems & Telemetry Engineer", dept: "B.Tech Electronics & Communication Engineering", wing: "Hardware" },
+      "CS-H-03": { name: "Abhinav Sanil", title: "Circuit Architecture & Power Systems Specialist", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Hardware" },
+      "CE-H-04": { name: "Sreehari Subhash", title: "Environmental Sensing & Structural Dynamics Specialist", dept: "B.Tech Civil Engineering", wing: "Hardware" },
+      "AD-H-12": { name: "Nevil Biju Mathew", title: "Hardware Intelligence & Data Systems Specialist", dept: "B.Tech Artificial Intelligence & Data Science", wing: "Hardware" },
+      "AD-H-13": { name: "Arjun", title: "Hardware Reliability & Field QA Specialist", dept: "B.Tech Artificial Intelligence & Data Science", wing: "Hardware" },
+      "CS-P-10": { name: "Bestin George", title: "Head of Product Strategy & Community Triage", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Operations" },
+      "CS-P-08": { name: "Adwaith Ciju", title: "Chief Pitch Architect & Communications Lead", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Operations" },
+      "CS-P-09": { name: "Advaith B Nair", title: "Brand Director & Media Production Lead", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Operations" }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const memberId = params.get('id');
+
+    if (memberId && roster[memberId]) {
+      const m = roster[memberId];
+      document.getElementById('name').textContent = m.name;
+      document.getElementById('title').textContent = m.title;
+      document.getElementById('id-val').textContent = memberId;
+      document.getElementById('wing-val').textContent = m.wing;
+      document.getElementById('dept-val').textContent = m.dept;
+    } else {
+      document.getElementById('status-dot').classList.add('invalid');
+      document.getElementById('status-text').textContent = 'UNVERIFIED ID';
+      document.getElementById('name').textContent = 'Credential Not Found';
+      document.getElementById('title').textContent = 'This QR code does not match an active Code Kootu record.';
+      document.getElementById('id-val').textContent = memberId || 'NONE';
+      document.getElementById('wing-val').textContent = 'N/A';
+      document.getElementById('dept-val').textContent = 'Invalid Record';
+    }
+  </script>
+</body>
+</html>
