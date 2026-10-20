@@ -14,8 +14,12 @@
       --c-grey: #8C8C8C;
       --c-white: #F7F7F5;
       --c-red: #D62828;
+      --c-green: #10B981;
+      --c-green-glow: rgba(16, 185, 129, 0.25);
+      --c-green-border: rgba(16, 185, 129, 0.45);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
       background-color: var(--c-black);
       color: var(--c-white);
@@ -26,18 +30,147 @@
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
+      overflow: hidden;
+      perspective: 1000px;
     }
+
+    /* Ambient background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =========================================
+       INTRO FLOW ANIMATION OVERLAY
+       ========================================= */
+    #verify-splash {
+      position: fixed;
+      inset: 0;
+      background: var(--c-black);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1), transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #verify-splash.hidden {
+      opacity: 0;
+      transform: scale(1.05);
+      pointer-events: none;
+    }
+
+    .scanner-box {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    /* Outer circular pulse wave */
+    .radar-ring {
+      position: absolute;
+      inset: -15px;
+      border-radius: 50%;
+      border: 2px solid var(--c-green);
+      opacity: 0;
+      animation: ripple 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+    }
+    .radar-ring:nth-child(2) {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes ripple {
+      0% { transform: scale(0.6); opacity: 0.9; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    /* SVG Success Checkmark stroke draw */
+    .check-circle {
+      width: 100px;
+      height: 100px;
+      stroke-dasharray: 283;
+      stroke-dashoffset: 283;
+      animation: drawCircle 0.8s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+      filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.5));
+    }
+
+    .check-path {
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+      animation: drawCheck 0.45s 0.65s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+
+    @keyframes drawCircle {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .splash-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--c-green);
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: textAppear 0.5s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .splash-sub {
+      font-size: 0.75rem;
+      color: var(--c-grey);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      margin-top: 0.4rem;
+      opacity: 0;
+      animation: textAppear 0.5s 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes textAppear {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================
+       MAIN VERIFICATION CARD
+       ========================================= */
     .badge-card {
       width: 100%;
       max-width: 440px;
       background: var(--c-charcoal);
       border: 1px solid rgba(247, 247, 245, 0.12);
       border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      padding: 2.25rem 2rem 2rem;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7);
       position: relative;
       overflow: hidden;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px) scale(0.96);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
+
+    .badge-card.revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
     .badge-card::before {
       content: '';
       position: absolute;
@@ -45,83 +178,143 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: var(--c-red);
+      background: linear-gradient(90deg, var(--c-red) 0%, #ff4d4d 50%, var(--c-red) 100%);
+      background-size: 200% 100%;
+      animation: beamSlide 4s linear infinite;
     }
+
+    @keyframes beamSlide {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+
     .status-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: rgba(247, 247, 245, 0.08);
-      border: 1px solid rgba(247, 247, 245, 0.2);
+      gap: 0.55rem;
+      background: var(--c-green-glow);
+      border: 1px solid var(--c-green-border);
       border-radius: 9999px;
-      padding: 0.35rem 0.85rem;
+      padding: 0.4rem 0.95rem;
       font-size: 0.75rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 1.25rem;
+      color: var(--c-green);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 18px var(--c-green-glow);
     }
+
     .status-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--c-white);
-      box-shadow: 0 0 10px var(--c-white);
+      background: var(--c-green);
+      box-shadow: 0 0 10px var(--c-green);
+      position: relative;
     }
-    .status-dot.invalid {
+
+    .status-dot::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1.5px solid var(--c-green);
+      animation: pulseDot 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+    }
+
+    @keyframes pulseDot {
+      0% { transform: scale(0.8); opacity: 1; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+
+    .status-pill.invalid {
+      background: rgba(214, 40, 40, 0.18);
+      border-color: rgba(214, 40, 40, 0.45);
+      color: var(--c-red);
+      box-shadow: 0 0 18px rgba(214, 40, 40, 0.25);
+    }
+    .status-pill.invalid .status-dot {
       background: var(--c-red);
       box-shadow: 0 0 10px var(--c-red);
     }
+    .status-pill.invalid .status-dot::after {
+      border-color: var(--c-red);
+    }
+
     .member-name {
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.35rem;
       color: var(--c-white);
     }
+
     .member-title {
       font-size: 0.95rem;
       color: var(--c-grey);
       font-weight: 500;
       margin-bottom: 1.75rem;
-      line-height: 1.4;
+      line-height: 1.45;
     }
+
     .info-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 1.25rem 1rem;
       border-top: 1px solid rgba(247, 247, 245, 0.1);
-      padding-top: 1.25rem;
-      margin-bottom: 1.5rem;
+      padding-top: 1.5rem;
+      margin-bottom: 1.75rem;
     }
+
     .info-label {
       font-size: 0.7rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--c-grey);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.25rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.3rem;
     }
+
     .info-val {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--c-white);
     }
+
     .footer-stamp {
       border-top: 1px dashed rgba(247, 247, 245, 0.12);
-      padding-top: 1rem;
+      padding-top: 1.1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.72rem;
       color: var(--c-grey);
       font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
     }
   </style>
 </head>
 <body>
 
+  <!-- Full-Screen Verification Flow Overlay -->
+  <div id="verify-splash">
+    <div class="scanner-box">
+      <div class="radar-ring" id="radar-1"></div>
+      <div class="radar-ring" id="radar-2"></div>
+      
+      <!-- Animated SVG Tick -->
+      <svg class="check-circle" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="45" stroke="#10B981" stroke-width="4" stroke-linecap="round" />
+        <path class="check-path" d="M30 52 L44 66 L70 36" stroke="#10B981" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+    <div class="splash-text" id="splash-title">VERIFYING SIGNATURE...</div>
+    <div class="splash-sub" id="splash-sub">CODE KOOTU SECURE CREDENTIAL CHECK</div>
+  </div>
+
+  <!-- Final Credential Display Card -->
   <div class="badge-card" id="card">
     <div class="status-pill" id="status-pill">
       <span class="status-dot" id="status-dot"></span>
@@ -173,23 +366,66 @@
 
     const params = new URLSearchParams(window.location.search);
     const memberId = params.get('id');
+    const isValid = memberId && roster[memberId];
 
-    if (memberId && roster[memberId]) {
+    const splash = document.getElementById('verify-splash');
+    const splashTitle = document.getElementById('splash-title');
+    const card = document.getElementById('card');
+
+    if (isValid) {
       const m = roster[memberId];
       document.getElementById('name').textContent = m.name;
       document.getElementById('title').textContent = m.title;
       document.getElementById('id-val').textContent = memberId;
       document.getElementById('wing-val').textContent = m.wing;
       document.getElementById('dept-val').textContent = m.dept;
+
+      setTimeout(() => {
+        splashTitle.textContent = "CREDENTIAL CONFIRMED";
+      }, 700);
+
+      // Transition to card after 1.25s
+      setTimeout(() => {
+        splash.classList.add('hidden');
+        card.classList.add('revealed');
+      }, 1250);
     } else {
-      document.getElementById('status-dot').classList.add('invalid');
+      // Failed verification state
+      const checkCircle = document.querySelector('.check-circle');
+      checkCircle.innerHTML = `
+        <circle cx="50" cy="50" r="45" stroke="#D62828" stroke-width="4" stroke-linecap="round" />
+        <path class="check-path" d="M35 35 L65 65 M65 35 L35 65" stroke="#D62828" stroke-width="5" stroke-linecap="round" />
+      `;
+      document.querySelectorAll('.radar-ring').forEach(r => r.style.borderColor = '#D62828');
+      splashTitle.style.color = '#D62828';
+      splashTitle.textContent = "INVALID CREDENTIAL";
+
+      const pill = document.getElementById('status-pill');
+      pill.classList.add('invalid');
       document.getElementById('status-text').textContent = 'UNVERIFIED ID';
       document.getElementById('name').textContent = 'Credential Not Found';
       document.getElementById('title').textContent = 'This QR code does not match an active Code Kootu record.';
       document.getElementById('id-val').textContent = memberId || 'NONE';
       document.getElementById('wing-val').textContent = 'N/A';
       document.getElementById('dept-val').textContent = 'Invalid Record';
+
+      setTimeout(() => {
+        splash.classList.add('hidden');
+        card.classList.add('revealed');
+      }, 1350);
     }
+
+    // 3D Tilt Effect
+    document.addEventListener('mousemove', (e) => {
+      const { innerWidth, innerHeight } = window;
+      const xOffset = (e.clientX - innerWidth / 2) / (innerWidth / 2);
+      const yOffset = (e.clientY - innerHeight / 2) / (innerHeight / 2);
+      card.style.transform = `rotateY(${xOffset * 4}deg) rotateX(${-yOffset * 4}deg)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
   </script>
 </body>
 </html>
