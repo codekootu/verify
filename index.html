@@ -347,25 +347,34 @@
 
   <script>
     const roster = {
-      "CS-S-01": { name: "Noel Mathews", title: "Chief Systems Architect & Technical Director", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
-      "CS-S-02": { name: "Gokul G Krishna", title: "Backend & Cloud Infrastructure Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
-      "CY-S-14": { name: "Sayed Ibrahim", title: "Systems Security & Web Experience Lead", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Software" },
-      "CS-S-06": { name: "Ameen Puthiyottil", title: "Application & Core Logic Developer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
-      "CS-S-05": { name: "Kevin Paul", title: "Integration & Middleware Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
-      "CS-S-11": { name: "Abdullah Ikhwan K A", title: "Embedded Software & Firmware Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
-      "ME-H-07": { name: "Austin M J", title: "Lead Mechanical & Structural Engineer", dept: "B.Tech Mechanical Engineering", wing: "Hardware" },
-      "EC-H-15": { name: "Muhammed Shahbaz K P", title: "Lead Embedded Systems & Telemetry Engineer", dept: "B.Tech Electronics & Communication Engineering", wing: "Hardware" },
-      "CS-H-03": { name: "Abhinav Sanil", title: "Circuit Architecture & Power Systems Specialist", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Hardware" },
-      "CE-H-04": { name: "Sreehari Subhash", title: "Environmental Sensing & Structural Dynamics Specialist", dept: "B.Tech Civil Engineering", wing: "Hardware" },
-      "AD-H-12": { name: "Nevil Biju Mathew", title: "Hardware Intelligence & Data Systems Specialist", dept: "B.Tech Artificial Intelligence & Data Science", wing: "Hardware" },
-      "AD-H-13": { name: "Arjun", title: "Hardware Reliability & Field QA Specialist", dept: "B.Tech Artificial Intelligence & Data Science", wing: "Hardware" },
-      "CS-P-10": { name: "Bestin George", title: "Head of Product Strategy & Community Triage", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Operations" },
-      "CS-P-08": { name: "Adwaith Ciju", title: "Chief Pitch Architect & Communications Lead", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Operations" },
-      "CS-P-09": { name: "Advaith B Nair", title: "Brand Director & Media Production Lead", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Operations" },
-      "CS-S-16": { name: "Darshana D Shenoy", title: "Frontend / Web Developer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
-      "CS-S-17": { name: "Feba Bobby George", title: "Full Stack Developer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software" },
-      "CY-C-18": { name: "Sanjay S", title: "Security Analyst / Penetration Tester", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Cybersecurity" },
-      "EC-H-20": { name: "Christy Kuruvilla", title: "VLSI Design & PCB Layout Engineer", dept: "B.Tech Electronics & Communication Engineering (VLSI)", wing: "Hardware" }
+      /* Wing 1: Software Engineering (CSE Core) */
+      "CS-S-01": { name: "Noel Mathews", title: "Chief Systems Architect & Technical Director", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
+      "CS-S-02": { name: "Gokul G Krishna", title: "Backend & Cloud Infrastructure Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
+      "CS-S-05": { name: "Kevin Paul", title: "Integration & Middleware Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
+      "CS-S-06": { name: "Ameen Puthiyottil", title: "Application & Core Logic Developer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
+      "CS-S-11": { name: "Abdullah Ikhwan K A", title: "Embedded Software & Firmware Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
+      "CS-S-16": { name: "Darshana D Shenoy", title: "Frontend / Web Developer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
+      "CS-S-17": { name: "Feba Bobby George", title: "Full Stack Developer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
+
+      /* Wing 2: Cyber Security & Infrastructure */
+      "CY-S-14": { name: "Sayed Ibrahim", title: "Systems Security & Web Experience Lead", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Cyber Security & Infrastructure" },
+      "CY-C-18": { name: "Sanjay S", title: "Security Analyst / Penetration Tester", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Cyber Security & Infrastructure" },
+
+      /* Wing 3: Electronics, EC & VLSI */
+      "EC-H-15": { name: "Muhammed Shahbaz K P", title: "Lead Embedded Systems & Telemetry Engineer", dept: "B.Tech Electronics & Communication Engineering", wing: "Electronics, EC & VLSI" },
+      "CS-H-03": { name: "Abhinav Sanil", title: "Circuit Architecture & Power Systems Specialist", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Electronics, EC & VLSI" },
+      "AD-H-12": { name: "Nevil Biju Mathew", title: "Hardware Intelligence & Data Systems Specialist", dept: "B.Tech Artificial Intelligence & Data Science", wing: "Electronics, EC & VLSI" },
+      "EC-H-20": { name: "Christy Kuruvilla", title: "VLSI Design & PCB Layout Engineer", dept: "B.Tech Electronics & Communication Engineering (VLSI)", wing: "Electronics, EC & VLSI" },
+
+      /* Wing 4: Mechanical, Civil & Structural */
+      "ME-H-07": { name: "Austin M J", title: "Lead Mechanical & Structural Engineer", dept: "B.Tech Mechanical Engineering", wing: "Mechanical, Civil & Structural" },
+      "CE-H-04": { name: "Sreehari Subhash", title: "Environmental Sensing & Structural Dynamics Specialist", dept: "B.Tech Civil Engineering", wing: "Mechanical, Civil & Structural" },
+      "AD-H-13": { name: "Arjun", title: "Hardware Reliability & Field QA Specialist", dept: "B.Tech Artificial Intelligence & Data Science", wing: "Mechanical, Civil & Structural" },
+
+      /* Wing 5: Media & Outreach */
+      "CS-P-10": { name: "Bestin George", title: "Head of Product Strategy & Community Triage", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Media & Outreach" },
+      "CS-P-08": { name: "Adwaith Ciju", title: "Chief Pitch Architect & Communications Lead", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Media & Outreach" },
+      "CS-P-09": { name: "Advaith B Nair", title: "Brand Director & Media Production Lead", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Media & Outreach" }
     };
 
     const params = new URLSearchParams(window.location.search);
