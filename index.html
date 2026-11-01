@@ -346,8 +346,8 @@
   </div>
 
   <script>
-    const roster = {
-      /* Wing 1: Software Engineering (CSE Core) */
+        const roster = {
+      /* Wing 1: Software Engineering */
       "CS-S-01": { name: "Noel Mathews", title: "Chief Systems Architect & Technical Director", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
       "CS-S-02": { name: "Gokul G Krishna", title: "Backend & Cloud Infrastructure Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
       "CS-S-05": { name: "Kevin Paul", title: "Integration & Middleware Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
@@ -356,25 +356,27 @@
       "CS-S-16": { name: "Darshana D Shenoy", title: "Frontend / Web Developer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
       "CS-S-17": { name: "Feba Bobby George", title: "Full Stack Developer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
 
-      /* Wing 2: Cyber Security & Infrastructure */
-      "CY-S-14": { name: "Sayed Ibrahim", title: "Systems Security & Web Experience Lead", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Cyber Security & Infrastructure" },
-      "CY-C-18": { name: "Sanjay S", title: "Security Analyst / Penetration Tester", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Cyber Security & Infrastructure" },
+      /* Wing 2: Cyber Security */
+      "CY-S-14": { name: "Sayed Ibrahim", title: "Systems Security & Web Experience Lead", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Cyber Security" },
+      "CY-P-18": { name: "Sanjay S", title: "Security Analyst / Penetration Tester", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Cyber Security" },
+      "VL-C-19": { name: "Edwin M John", title: "Hardware Security & Embedded Silicon Engineer", dept: "B.Tech Computer Science & Engineering (Cybersecurity)", wing: "Cyber Security" },
+      "CS-S-09": { name: "Aaron Regi Thomas", title: "Application Security & DevSecOps Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Cyber Security" },
 
-      /* Wing 3: Electronics, EC & VLSI */
-      "EC-H-15": { name: "Muhammed Shahbaz K P", title: "Lead Embedded Systems & Telemetry Engineer", dept: "B.Tech Electronics & Communication Engineering", wing: "Electronics, EC & VLSI" },
-      "CS-H-03": { name: "Abhinav Sanil", title: "Circuit Architecture & Power Systems Specialist", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Electronics, EC & VLSI" },
-      "AD-H-12": { name: "Nevil Biju Mathew", title: "Hardware Intelligence & Data Systems Specialist", dept: "B.Tech Artificial Intelligence & Data Science", wing: "Electronics, EC & VLSI" },
-      "EC-H-20": { name: "Christy Kuruvilla", title: "VLSI Design & PCB Layout Engineer", dept: "B.Tech Electronics & Communication Engineering (VLSI)", wing: "Electronics, EC & VLSI" },
+      /* Wing 3: Hardware Engineering */
+      "EC-H-15": { name: "Muhammed Shahbaz K P", title: "Lead Embedded Systems & Telemetry Engineer", dept: "B.Tech Electronics & Communication Engineering", wing: "Hardware Engineering" },
+      "CS-H-03": { name: "Abhinav Sanil", title: "Circuit Architecture & Power Systems Specialist", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Hardware Engineering" },
+      "AD-H-12": { name: "Nevil Biju Mathew", title: "Hardware Intelligence & Data Systems Specialist", dept: "B.Tech Artificial Intelligence & Data Science", wing: "Hardware Engineering" },
+      "EC-H-20": { name: "Christy Kuruvilla", title: "VLSI Design / PCB Layout Engineer", dept: "B.Tech Electronics & Communication Engineering (VLSI)", wing: "Hardware Engineering" },
+      "ME-H-07": { name: "Austin M J", title: "Lead Mechanical & Structural Engineer", dept: "B.Tech Mechanical / Civil Engineering", wing: "Hardware Engineering" },
+      "CE-H-04": { name: "Sreehari Subhash", title: "Environmental Sensing & Structural Dynamics Specialist", dept: "B.Tech Civil / Mechanical Engineering", wing: "Hardware Engineering" },
+      "AD-H-13": { name: "Arjun", title: "Hardware Reliability & Field QA Specialist", dept: "B.Tech Mechanical Engineering", wing: "Hardware Engineering" },
 
-      /* Wing 4: Mechanical, Civil & Structural */
-      "ME-H-07": { name: "Austin M J", title: "Lead Mechanical & Structural Engineer", dept: "B.Tech Mechanical Engineering", wing: "Mechanical, Civil & Structural" },
-      "CE-H-04": { name: "Sreehari Subhash", title: "Environmental Sensing & Structural Dynamics Specialist", dept: "B.Tech Civil Engineering", wing: "Mechanical, Civil & Structural" },
-      "AD-H-13": { name: "Arjun", title: "Hardware Reliability & Field QA Specialist", dept: "B.Tech Artificial Intelligence & Data Science", wing: "Mechanical, Civil & Structural" },
-
-      /* Wing 5: Media & Outreach */
+      /* Wing 4: Media & Outreach */
       "CS-P-10": { name: "Bestin George", title: "Head of Product Strategy & Community Triage", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Media & Outreach" },
       "CS-P-08": { name: "Adwaith Ciju", title: "Chief Pitch Architect & Communications Lead", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Media & Outreach" },
-      "CS-P-09": { name: "Advaith B Nair", title: "Brand Director & Media Production Lead", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Media & Outreach" }
+
+      /* Forever Kootu */
+      "CS-P-09": { name: "Advaith B Nair", title: "Brand Director & Media Production Lead", dept: "Founding Member", wing: "Forever Kootu", alumni: true }
     };
 
     const params = new URLSearchParams(window.location.search);
@@ -391,7 +393,7 @@
       document.getElementById('title').textContent = m.title;
       document.getElementById('id-val').textContent = memberId;
       document.getElementById('wing-val').textContent = m.wing;
-      document.getElementById('dept-val').textContent = m.dept;
+      if (m.alumni) document.getElementById('status-text').textContent = 'FOUNDING MEMBER';
 
       setTimeout(() => {
         splashTitle.textContent = "CREDENTIAL CONFIRMED";
