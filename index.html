@@ -346,7 +346,7 @@
   </div>
 
   <script>
-        const roster = {
+    const roster = {
       /* Wing 1: Software Engineering */
       "CS-S-01": { name: "Noel Mathews", title: "Chief Systems Architect & Technical Director", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
       "CS-S-02": { name: "Gokul G Krishna", title: "Backend & Cloud Infrastructure Engineer", dept: "B.Tech Computer Science & Engineering (Core)", wing: "Software Engineering" },
@@ -393,6 +393,7 @@
       document.getElementById('title').textContent = m.title;
       document.getElementById('id-val').textContent = memberId;
       document.getElementById('wing-val').textContent = m.wing;
+      document.getElementById('dept-val').textContent = m.dept;
       if (m.alumni) document.getElementById('status-text').textContent = 'FOUNDING MEMBER';
 
       setTimeout(() => {
